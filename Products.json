@@ -30,7 +30,7 @@
 { "id": 19, "name": "COCO HALLOWEEN", "price": 8000, "image": "https://i.ibb.co.com/nMr4j6wn/COCO-HALLOWEEN.png" },
 { "id": 20, "name": "COCO KULAKU", "price": 8000, "image": "https://i.ibb.co.com/JFbssxdc/COCO-KULAKU.png" },
 { "id": 21, "name": "COCO LUMER", "price": 8000, "image": "https://i.ibb.co.com/Xx1LcG6h/COCO-LUMER.png" },
-{ "id": 22, "name": "COCO MALTINO", "price: 8000, "image": "https://i.ibb.co.com/j9HWM798/COCO-MALTINO.png" },
+{ "id": 22, "name": "COCO MALTINO", "price": 8000, "image": "https://i.ibb.co.com/j9HWM798/COCO-MALTINO.png" },
 { "id": 23, "name": "COCO QUEEN", "price": 8000, "image": "https://i.ibb.co.com/27fjM1MM/COCO-QUEEN.png" },
 { "id": 24, "name": "COCO RED FOREST", "price": 8000, "image": "https://i.ibb.co.com/Q7bYMsnS/COCO-RED-FOREST.png" },
 { "id": 25, "name": "COCO ROCKY TIRAMISU", "price": 8000, "image": "https://i.ibb.co.com/qY2vkfPY/COCO-ROCKY-TIRAMISU.png" },
@@ -63,9 +63,9 @@
 { "id": 40, "name": "DURIAN", "price": 8000, "image": "https://i.ibb.co.com/7xKgRQYw/DURIAN.png" },
 { "id": 41, "name": "FRESH LIME", "price": 8000, "image": "https://i.ibb.co.com/JjWy0rdC/FRESH-LIME.png" },
 { "id": 42, "name": "LEMONADE", "price": 8000, "image": "https://i.ibb.co.com/PvcG5MmL/LEMONADE.png" },
-{ "id": 43, "name": "LYCHEE", "price: 8000, "image": "https://i.ibb.co.com/NgPmPBP9/LYCHEE.png" },
+{ "id": 43, "name": "LYCHEE", "price": 8000, "image": "https://i.ibb.co.com/NgPmPBP9/LYCHEE.png" },
 { "id": 44, "name": "MANGGO TANGO", "price": 8000, "image": "https://i.ibb.co.com/xq4YsHKF/MANGGO-TANGO.png" },
-{ "id": 45, "name": "MILK ESPRESSO", "price: 8000, "image": "https://i.ibb.co.com/4nHqbD0m/MILK-ESPRESSO.png" },
+{ "id": 45, "name": "MILK ESPRESSO", "price": 8000, "image": "https://i.ibb.co.com/4nHqbD0m/MILK-ESPRESSO.png" },
 { "id": 46, "name": "STRAWBERRY BELLY", "price": 8000, "image": "https://i.ibb.co.com/QvgxtJtj/STRAWBERRY-BELLY.png" }
 ]
 }

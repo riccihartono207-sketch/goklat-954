@@ -59,7 +59,7 @@
     <!-- Indikator Loading Awal -->
     <div class="flex flex-col items-center justify-center h-screen">
       <div class="loader mb-4"></div>
-      <p class="text-purple-900 font-semibold">Memuat Menu Goklat...</p>
+      <p class="text-purple-900 font-semibold text-center px-4">Menghubungkan ke database Menu Goklat...</p>
     </div>
   </div>
 
@@ -87,19 +87,37 @@
     let selectedKelurahan = "";
     let currentShippingFee = 0;
 
-    // Fungsi Utama Fetch Data dari Products.json
     async function loadProducts() {
+      // Mendeteksi base path (berguna jika di subfolder GitHub Pages)
+      const currentPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+      const fileName = "Products.json"; // Menggunakan P besar sesuai file Anda
+      const timestamp = new Date().getTime();
+      const targetUrl = `${window.location.origin}${currentPath}${fileName}?v=${timestamp}`;
+
       try {
-        // Mengambil file JSON dari direktori yang sama
-        const response = await fetch('Products.json');
+        console.log("Mencoba mengambil data dari:", targetUrl);
+        
+        const response = await fetch(targetUrl, {
+          cache: 'no-store'
+        });
         
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         
-        categories = await response.json();
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("File ditemukan, tapi bukan format JSON (Mungkin halaman 404 GitHub)");
+        }
+
+        const data = await response.json();
         
-        // Inisialisasi status kategori (tutup semua kecuali yang pertama secara default)
+        if (!data || Object.keys(data).length === 0) {
+          throw new Error("Data JSON terbaca tapi isinya kosong.");
+        }
+
+        categories = data;
+        
         const keys = Object.keys(categories);
         keys.forEach((key, index) => {
           openCategories[key] = index === 0;
@@ -107,16 +125,20 @@
         
         renderApp();
       } catch (error) {
-        console.error("Fetch error:", error);
+        console.error("Fetch error details:", error);
         document.getElementById('app').innerHTML = `
           <div class="flex flex-col items-center justify-center h-screen p-6 text-center bg-white">
             <div class="text-red-500 text-5xl mb-4">⚠️</div>
-            <p class="text-red-600 font-bold mb-2 text-xl">Data Menu Tidak Ditemukan</p>
-            <p class="text-gray-500 text-sm max-w-xs">
-              Pastikan file <b>Products.json</b> sudah di-upload ke repository Anda di folder yang sama dengan <b>index.html</b>.
+            <p class="text-red-600 font-bold mb-2 text-xl">Gagal Memuat Menu</p>
+            <div class="text-gray-500 text-sm max-w-md mb-6 bg-gray-50 p-4 rounded-lg border">
+              <p class="mb-2"><b>Keterangan:</b> ${error.message}</p>
+              <p class="text-xs break-all text-gray-400"><b>URL yang dicoba:</b> <br>${targetUrl}</p>
+            </div>
+            <p class="text-sm text-gray-600 mb-6">
+              Tips: Pastikan file <b>Products.json</b> sudah di-upload ke GitHub dan statusnya 'Public'.
             </p>
-            <button onclick="location.reload()" class="mt-6 px-8 py-3 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">
-              Muat Ulang Halaman
+            <button onclick="location.reload()" class="px-8 py-3 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">
+              Coba Lagi
             </button>
           </div>
         `;
@@ -202,7 +224,6 @@
                     <div class="flex items-center gap-3">
                       <span class="text-2xl">${cat.icon || '🥤'}</span>
                       <h2 class="text-xl font-bold text-purple-900">${cat.name}</h2>
-                      <span class="text-xs text-purple-400 font-normal">(${cat.products.length} menu)</span>
                     </div>
                     <svg class="rotate-icon ${isOpen ? 'open' : ''}" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
                   </div>
@@ -285,15 +306,13 @@
           `}
           
           <footer class="mt-12 text-center text-gray-400 text-xs">
-            &copy; 2025 ${config.store_title} - Digital Ordering System
+            &copy; 2026 ${config.store_title} - Digital Ordering System
           </footer>
         </div>
       `;
     }
 
-    // Jalankan aplikasi
     window.onload = loadProducts;
   </script>
 </body>
 </html>
-

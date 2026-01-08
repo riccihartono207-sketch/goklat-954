@@ -87,11 +87,11 @@
     let selectedKelurahan = "";
     let currentShippingFee = 0;
 
-    // Fungsi Utama Fetch Data dari products.json
+    // Fungsi Utama Fetch Data dari Products.json
     async function loadProducts() {
       try {
         // Mengambil file JSON dari direktori yang sama
-        const response = await fetch('products.json');
+        const response = await fetch('Products.json');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -113,7 +113,7 @@
             <div class="text-red-500 text-5xl mb-4">⚠️</div>
             <p class="text-red-600 font-bold mb-2 text-xl">Data Menu Tidak Ditemukan</p>
             <p class="text-gray-500 text-sm max-w-xs">
-              Pastikan file <b>products.json</b> sudah di-upload ke repository Anda di folder yang sama dengan <b>index.html</b>.
+              Pastikan file <b>Products.json</b> sudah di-upload ke repository Anda di folder yang sama dengan <b>index.html</b>.
             </p>
             <button onclick="location.reload()" class="mt-6 px-8 py-3 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">
               Muat Ulang Halaman
@@ -296,3 +296,4 @@
   </script>
 </body>
 </html>
+

@@ -59,7 +59,7 @@
     <!-- Indikator Loading Awal -->
     <div class="flex flex-col items-center justify-center h-screen">
       <div class="loader mb-4"></div>
-      <p class="text-purple-900 font-semibold text-center px-4">Menghubungkan ke database Menu Goklat...</p>
+      <p class="text-purple-900 font-semibold text-center px-4">Memuat Menu Goklat...</p>
     </div>
   </div>
 
@@ -70,6 +70,9 @@
       whatsapp_number: "6282277647548",
       primary_color: "#5b21b6"
     };
+
+    // URL GitHub Anda yang sudah dipastikan jalan
+    const DATA_URL = "https://riccihartono207-sketch.github.io/golat-945/Products.json";
 
     const locationData = {
       "Padangsidimpuan Utara": { "Batang Ayumi Julu": 2000, "Batang Ayumi Jae": 2000, "Baringin": 3000, "Bonan Dolok": 3000, "Kantor": 3000, "Losung Batu": 3000, "Pancuran Gerobak": 3000, "Sadabuan": 5000, "Sibatua": 5000, "Timbangan": 5000, "Wek I": 3000, "Wek II": 3000, "Wek III": 3000, "Wek IV": 3000 },
@@ -88,32 +91,23 @@
     let currentShippingFee = 0;
 
     async function loadProducts() {
-      // Mendeteksi base path (berguna jika di subfolder GitHub Pages)
-      const currentPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
-      const fileName = "Products.json"; // Menggunakan P besar sesuai file Anda
+      // Menggunakan URL absolut untuk stabilitas di lingkungan preview
       const timestamp = new Date().getTime();
-      const targetUrl = `${window.location.origin}${currentPath}${fileName}?v=${timestamp}`;
+      const fetchUrl = `${DATA_URL}?v=${timestamp}`;
 
       try {
-        console.log("Mencoba mengambil data dari:", targetUrl);
+        console.log("Fetching data from:", fetchUrl);
         
-        const response = await fetch(targetUrl, {
-          cache: 'no-store'
-        });
+        const response = await fetch(fetchUrl);
         
         if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          throw new Error(`Gagal mengambil file (Status ${response.status}).`);
         }
         
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("File ditemukan, tapi bukan format JSON (Mungkin halaman 404 GitHub)");
-        }
-
         const data = await response.json();
         
         if (!data || Object.keys(data).length === 0) {
-          throw new Error("Data JSON terbaca tapi isinya kosong.");
+          throw new Error("Data JSON terbaca tetapi tidak ada isinya.");
         }
 
         categories = data;
@@ -125,20 +119,17 @@
         
         renderApp();
       } catch (error) {
-        console.error("Fetch error details:", error);
+        console.error("Load error:", error);
         document.getElementById('app').innerHTML = `
           <div class="flex flex-col items-center justify-center h-screen p-6 text-center bg-white">
             <div class="text-red-500 text-5xl mb-4">⚠️</div>
-            <p class="text-red-600 font-bold mb-2 text-xl">Gagal Memuat Menu</p>
-            <div class="text-gray-500 text-sm max-w-md mb-6 bg-gray-50 p-4 rounded-lg border">
-              <p class="mb-2"><b>Keterangan:</b> ${error.message}</p>
-              <p class="text-xs break-all text-gray-400"><b>URL yang dicoba:</b> <br>${targetUrl}</p>
+            <p class="text-red-600 font-bold mb-2 text-xl">Database Menu Terputus</p>
+            <div class="text-gray-500 text-sm max-w-md mb-6 bg-gray-50 p-4 rounded-lg border text-left">
+              <p class="mb-2 italic">"${error.message}"</p>
+              <p class="text-xs">Sistem tidak bisa menarik data menu dari link GitHub Anda. Pastikan file tetap ada dan link tidak berubah.</p>
             </div>
-            <p class="text-sm text-gray-600 mb-6">
-              Tips: Pastikan file <b>Products.json</b> sudah di-upload ke GitHub dan statusnya 'Public'.
-            </p>
             <button onclick="location.reload()" class="px-8 py-3 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">
-              Coba Lagi
+              Coba Hubungkan Lagi
             </button>
           </div>
         `;

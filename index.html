@@ -56,7 +56,6 @@
 </head>
 <body class="bg-gray-100 h-full w-full overflow-auto">
   <div id="app" class="w-full min-h-full">
-    <!-- Indikator Loading Awal -->
     <div class="flex flex-col items-center justify-center h-screen">
       <div class="loader mb-4"></div>
       <p class="text-purple-900 font-semibold text-center px-4">Memuat Menu Goklat...</p>
@@ -71,7 +70,6 @@
       primary_color: "#5b21b6"
     };
 
-    // Menggunakan URL absolut GitHub yang sudah diverifikasi publik
     const DATA_URL = "https://riccihartono207-sketch.github.io/golat-945/Products.json";
 
     const locationData = {
@@ -91,27 +89,29 @@
     let currentShippingFee = 0;
 
     async function loadProducts() {
-      // Menambahkan timestamp untuk menghindari cache browser yang lama
       const timestamp = new Date().getTime();
       const fetchUrl = `${DATA_URL}?v=${timestamp}`;
 
       try {
-        console.log("Mencoba mengambil data dari:", fetchUrl);
-        
         const response = await fetch(fetchUrl);
         
         if (!response.ok) {
-          throw new Error(`Gagal mengambil file (Status ${response.status}).`);
+          throw new Error(`Server GitHub merespon dengan status: ${response.status}`);
         }
         
-        const data = await response.json();
+        const rawText = await response.text();
         
-        if (!data || Object.keys(data).length === 0) {
-          throw new Error("Data JSON terbaca tetapi tidak ada isinya.");
+        try {
+          categories = JSON.parse(rawText);
+        } catch (parseError) {
+          console.error("Detail Error JSON:", parseError);
+          throw new Error(`Format file JSON salah: ${parseError.message}. Periksa baris dan kolom yang disebutkan.`);
+        }
+        
+        if (!categories || Object.keys(categories).length === 0) {
+          throw new Error("File JSON berhasil dimuat, tetapi tidak ada data menu di dalamnya.");
         }
 
-        categories = data;
-        
         const keys = Object.keys(categories);
         keys.forEach((key, index) => {
           openCategories[key] = index === 0;
@@ -119,17 +119,24 @@
         
         renderApp();
       } catch (error) {
-        console.error("Load error:", error);
         document.getElementById('app').innerHTML = `
           <div class="flex flex-col items-center justify-center h-screen p-6 text-center bg-white">
             <div class="text-red-500 text-5xl mb-4">⚠️</div>
-            <p class="text-red-600 font-bold mb-2 text-xl">Database Menu Terputus</p>
-            <div class="text-gray-500 text-sm max-w-md mb-6 bg-gray-50 p-4 rounded-lg border text-left">
-              <p class="mb-2 italic">"${error.message}"</p>
-              <p class="text-xs">Sistem tidak bisa menarik data menu dari link GitHub Anda. Pastikan file tetap ada dan status repositori adalah 'Public'.</p>
+            <p class="text-red-600 font-bold mb-2 text-xl">Kesalahan Database Menu</p>
+            <div class="text-gray-500 text-sm max-w-md mb-6 bg-red-50 p-4 rounded-lg border border-red-100 text-left">
+              <p class="font-bold text-red-700 mb-1">Pesan Error:</p>
+              <p class="mb-3 italic text-red-600">${error.message}</p>
+              <p class="text-xs text-gray-600 font-bold">Cara Memperbaiki:</p>
+              <ol class="text-xs text-gray-600 list-decimal ml-4 mt-1 space-y-1">
+                <li>Buka file <b>Products.json</b> di GitHub Anda.</li>
+                <li>Cari area di sekitar baris/posisi yang disebutkan.</li>
+                <li>Pastikan setiap <b>"nama_properti": "nilai"</b> dipisahkan tanda titik dua (:).</li>
+                <li>Pastikan setiap item dipisahkan koma (,) kecuali item terakhir.</li>
+                <li>Gunakan <b>jsonlint.com</b> untuk mengecek kebenaran isi file Anda.</li>
+              </ol>
             </div>
             <button onclick="location.reload()" class="px-8 py-3 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">
-              Coba Hubungkan Lagi
+              Muat Ulang Halaman
             </button>
           </div>
         `;

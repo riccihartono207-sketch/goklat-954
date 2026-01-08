@@ -71,7 +71,7 @@
       primary_color: "#5b21b6"
     };
 
-    // URL GitHub Anda yang sudah dipastikan jalan
+    // Menggunakan URL absolut GitHub yang sudah diverifikasi publik
     const DATA_URL = "https://riccihartono207-sketch.github.io/golat-945/Products.json";
 
     const locationData = {
@@ -91,12 +91,12 @@
     let currentShippingFee = 0;
 
     async function loadProducts() {
-      // Menggunakan URL absolut untuk stabilitas di lingkungan preview
+      // Menambahkan timestamp untuk menghindari cache browser yang lama
       const timestamp = new Date().getTime();
       const fetchUrl = `${DATA_URL}?v=${timestamp}`;
 
       try {
-        console.log("Fetching data from:", fetchUrl);
+        console.log("Mencoba mengambil data dari:", fetchUrl);
         
         const response = await fetch(fetchUrl);
         
@@ -126,7 +126,7 @@
             <p class="text-red-600 font-bold mb-2 text-xl">Database Menu Terputus</p>
             <div class="text-gray-500 text-sm max-w-md mb-6 bg-gray-50 p-4 rounded-lg border text-left">
               <p class="mb-2 italic">"${error.message}"</p>
-              <p class="text-xs">Sistem tidak bisa menarik data menu dari link GitHub Anda. Pastikan file tetap ada dan link tidak berubah.</p>
+              <p class="text-xs">Sistem tidak bisa menarik data menu dari link GitHub Anda. Pastikan file tetap ada dan status repositori adalah 'Public'.</p>
             </div>
             <button onclick="location.reload()" class="px-8 py-3 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">
               Coba Hubungkan Lagi

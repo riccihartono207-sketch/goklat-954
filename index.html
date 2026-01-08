@@ -3,85 +3,247 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Goklat 945 - Toko Online</title>
+  <title>Goklat 945 - Order Online</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
     
-    * {
-      font-family: 'Poppins', sans-serif;
-      box-sizing: border-box;
-    }
+    * { font-family: 'Poppins', sans-serif; box-sizing: border-box; }
     
-    .product-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    }
+    .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
     
     .whatsapp-btn {
       background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
       transition: all 0.3s ease;
     }
+    .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
     
-    .whatsapp-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-    }
-
     .category-content {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease;
     }
+    .category-content.open { max-height: 5000px; }
     
-    .category-content.open {
-      max-height: 5000px;
+    .rotate-icon { transition: transform 0.3s ease; }
+    .rotate-icon.open { transform: rotate(180deg); }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    
-    .rotate-icon {
-      transition: transform 0.3s ease;
-    }
-    
-    .rotate-icon.open {
-      transform: rotate(180deg);
-    }
+    .cart-slide-in { animation: slideUp 0.3s ease; }
   </style>
 </head>
-<body class="h-full w-full bg-[#f0f4f8]">
+<body class="bg-gray-100 h-full w-full overflow-auto">
   <div id="app" class="w-full min-h-full"></div>
 
   <script>
     const config = {
       store_title: "Goklat 945",
-      whatsapp_number: "6282277647548", // Format Internasional
+      whatsapp_number: "082277647548",
       primary_color: "#5b21b6",
-      text_color: "#1a202c"
+      background_color: "#f0f4f8"
     };
 
     const categories = {
       tea: {
-        name: "Tea",
-        icon: "☕",
+        name: "Tea", icon: "☕",
         products: [
           { id: 1, name: "APPLE TEA", price: 5000, image: "https://i.ibb.co.com/3yQp78w0/APPLE-TEA.png" },
           { id: 2, name: "VANILA TEA", price: 5000, image: "https://i.ibb.co.com/cG7mp47/VANILA-TEA.png" },
           { id: 3, name: "BLACKCURRANT TEA", price: 5000, image: "https://i.ibb.co.com/jZDw7TDm/BLACKCURRANT-TEA.png" },
+          { id: 4, name: "CREAMY MILK TEA", price: 5000, image: "https://i.ibb.co.com/xtcYPhF6/CREAMY-MILK-TEA.png", outOfStock: true },
           { id: 5, name: "JASMINE TEA", price: 5000, image: "https://i.ibb.co.com/RGrKrRyd/JASMINE-TEA.png" },
+          { id: 6, name: "LEMON HONEY TEA", price: 5000, image: "https://i.ibb.co.com/hJjttwvk/LEMON-HONEY-TEA.png", outOfStock: true },
+          { id: 7, name: "LEMON TEA", price: 5000, image: "https://i.ibb.co.com/TqNkLS53/LEMON-TEA.png", outOfStock: true },
           { id: 8, name: "LYCHEE TEA", price: 5000, image: "https://i.ibb.co.com/YBV02Fxd/LYCHEE-TEA.png" },
           { id: 9, name: "MANGO TEA", price: 5000, image: "https://i.ibb.co.com/d3jxM16/MANGO-TEA.png" },
+          { id: 10, name: "MILK TEA", price: 5000, image: "https://i.ibb.co.com/9mFnDShY/MILK-TEA.png", outOfStock: true },
           { id: 11, name: "PEACH TEA", price: 5000, image: "https://i.ibb.co.com/KjxnMWxP/PEACH-TEA.png" }
         ]
       },
       coco: {
-        name: "Coco",
-        icon: "🍫",
+        name: "Coco", icon: "🍫",
         products: [
           { id: 12, name: "DARK COCO", price: 8000, image: "https://i.ibb.co.com/gLQzDVJz/DARK-COCO.png" },
           { id: 13, name: "CHOCOLATE MILO", price: 8000, image: "https://i.ibb.co.com/21r1yLgC/CHOCOLATE-MILO.png" },
           { id: 14, name: "CHOCOLATE OREO", price: 8000, image: "https://i.ibb.co.com/yBdhwhRk/CHOCOLATE-OREO.png" },
           { id: 15, name: "COCO BANANA", price: 8000, image: "https://i.ibb.co.com/fYHNkBDS/COCO-BANANA.png" },
-          { id: 17, name: "COCO CLASSIC", price: 8
+          { id: 16, name: "COCO BLACK OREAO", price: 8000, image: "https://i.ibb.co.com/gFSK0Nbm/COCO-BLACK-OREAO.png" },
+          { id: 17, name: "COCO CLASSIC", price: 8000, image: "https://i.ibb.co.com/mrCSw2Q9/COCO-CLASSIC.png" },
+          { id: 18, name: "COCO DURIAN", price: 8000, image: "https://i.ibb.co.com/CK5JjdmN/COCO-DURIAN.png" },
+          { id: 19, name: "COCO HALLOWEEN", price: 8000, image: "https://i.ibb.co.com/nMr4j6wn/COCO-HALLOWEEN.png" },
+          { id: 20, name: "COCO KULAKU", price: 8000, image: "https://i.ibb.co.com/JFbssxdc/COCO-KULAKU.png" },
+          { id: 21, name: "COCO LUMER", price: 8000, image: "https://i.ibb.co.com/Xx1LcG6h/COCO-LUMER.png" },
+          { id: 22, name: "COCO MALTINO", price: 8000, image: "https://i.ibb.co.com/j9HWM798/COCO-MALTINO.png" },
+          { id: 23, name: "COCO QUEEN", price: 8000, image: "https://i.ibb.co.com/27fjM1MM/COCO-QUEEN.png" },
+          { id: 24, name: "COCO RED FOREST", price: 8000, image: "https://i.ibb.co.com/Q7bYMsnS/COCO-RED-FOREST.png" },
+          { id: 25, name: "COCO ROCKY TIRAMISU", price: 8000, image: "https://i.ibb.co.com/qY2vkfPY/COCO-ROCKY-TIRAMISU.png" },
+          { id: 26, name: "COCO SIGNATURE", price: 8000, image: "https://i.ibb.co.com/VcWM5J08/COCO-SIGNATURE.png" },
+          { id: 27, name: "COCO TELLA", price: 8000, image: "https://i.ibb.co.com/mQHwdGf/COCO-TELLA.png" },
+          { id: 28, name: "COCO TROUBLE", price: 8000, image: "https://i.ibb.co.com/xd2FGxp/COCO-TROUBLE.png" }
+        ]
+      },
+      coffee: {
+        name: "Coffee", icon: "☕",
+        products: [
+          { id: 29, name: "KOPI YEU VIETNAM", price: 8000, image: "https://i.ibb.co.com/bgj90sWf/KOPI-YEU-VIETNAM.png" },
+          { id: 30, name: "BLACK COFFEE", price: 8000, image: "https://i.ibb.co.com/6c73nd7F/BLACK-COFFEE.png" },
+          { id: 31, name: "COFFEE ALA GOKLAT", price: 8000, image: "https://i.ibb.co.com/fVxswndB/COFFEE-ALA-GOKLAT.png" },
+          { id: 32, name: "COFFEE MILK", price: 8000, image: "https://i.ibb.co.com/QjPg2XzN/COFFEE-MILK.png" },
+          { id: 33, name: "COFFIEE TIRAMISU", price: 8000, image: "https://i.ibb.co.com/d4tN1bCc/COFFIEE-TIRAMISU.png" }
+        ]
+      },
+      sugarfruite: {
+        name: "Sugar & Fruite", icon: "🍓",
+        products: [
+          { id: 34, name: "TARO", price: 8000, image: "https://i.ibb.co.com/8gtDgfhS/TARO.png" },
+          { id: 35, name: "ALPUKAT", price: 8000, image: "https://i.ibb.co.com/tw91m2xg/ALPUKAT.png" },
+          { id: 36, name: "BLOODY VELVET", price: 8000, image: "https://i.ibb.co.com/fVNPmQx5/BLOODY-VELVET.png" },
+          { id: 37, name: "BROWN SUGAR TIRAMISU", price: 8000, image: "https://i.ibb.co.com/21Trcvzb/BROWN-SUGAR-TIRAMISU.png" },
+          { id: 38, name: "BROWN SUGAR VANILLA LAGOAN", price: 8000, image: "https://i.ibb.co.com/s9kjddVS/BROWN-SUGAR-VANILLA-LAGOAN.png" },
+          { id: 39, name: "COOKIES CREAM", price: 8000, image: "https://i.ibb.co.com/43wSjDJ/COOKIES-CREAM.png" },
+          { id: 40, name: "DURIAN", price: 8000, image: "https://i.ibb.co.com/7xKgRQYw/DURIAN.png" },
+          { id: 41, name: "FRESH LIME", price: 8000, image: "https://i.ibb.co.com/JjWy0rdC/FRESH-LIME.png" },
+          { id: 42, name: "LEMONADE", price: 8000, image: "https://i.ibb.co.com/PvcG5MmL/LEMONADE.png" },
+          { id: 43, name: "LYCHEE", price: 8000, image: "https://i.ibb.co.com/NgPmPBP9/LYCHEE.png" },
+          { id: 44, name: "MANGGO TANGO", price: 8000, image: "https://i.ibb.co.com/xq4YsHKF/MANGGO-TANGO.png" },
+          { id: 45, name: "MILK ESPRESSO", price: 8000, image: "https://i.ibb.co.com/4nHqbD0m/MILK-ESPRESSO.png" },
+          { id: 46, name: "STRAWBERRY BELLY", price: 8000, image: "https://i.ibb.co.com/QvgxtJtj/STRAWBERRY-BELLY.png" }
+        ]
+      }
+    };
+
+    let cart = [];
+    let openCategories = { tea: true, coco: false, coffee: false, sugarfruite: false };
+
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
+    }
+
+    function toggleCategory(key) {
+      openCategories[key] = !openCategories[key];
+      renderApp();
+    }
+
+    function addToCart(pid) {
+      let product = null;
+      for (let k in categories) {
+        let found = categories[k].products.find(p => p.id === pid);
+        if (found) { product = found; break; }
+      }
+      const item = cart.find(i => i.id === pid);
+      if (item) { item.qty++; } else { cart.push({ ...product, qty: 1 }); }
+      renderApp();
+    }
+
+    function updateQty(pid, delta) {
+      const item = cart.find(i => i.id === pid);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(i => i.id !== pid);
+      }
+      renderApp();
+    }
+
+    function sendWhatsApp(e) {
+      e.preventDefault();
+      const f = e.target;
+      let msg = `*PESANAN BARU - ${config.store_title}*\n\n`;
+      cart.forEach(i => msg += `• ${i.name} (x${i.qty}) = ${formatCurrency(i.price * i.qty)}\n`);
+      msg += `\n*Total: ${formatCurrency(cart.reduce((s, i) => s + (i.price * i.qty), 0))}*\n\n`;
+      msg += `*Data Pembeli:*\nNama: ${f.name.value}\nWA: ${f.phone.value}\nAlamat: ${f.addr.value}\nKota: ${f.city.value}`;
+      window.open(`https://wa.me/62${config.whatsapp_number.substring(1)}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function renderApp() {
+      const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+      document.getElementById('app').innerHTML = `
+        <div class="max-w-4xl mx-auto px-4 py-8" style="background: ${config.background_color}">
+          <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-purple-900 mb-2">${config.store_title}</h1>
+            <p class="text-gray-600">Kesegaran Alami di Setiap Gelas</p>
+          </header>
+
+          <div class="space-y-6">
+            ${Object.keys(categories).map(key => {
+              const cat = categories[key];
+              const isOpen = openCategories[key];
+              return `
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100">
+                  <div onclick="toggleCategory('${key}')" class="p-5 bg-purple-50 flex justify-between items-center cursor-pointer hover:bg-purple-100 transition">
+                    <div class="flex items-center gap-3">
+                      <span class="text-2xl">${cat.icon}</span>
+                      <h2 class="text-xl font-bold text-purple-900">${cat.name}</h2>
+                      <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">${cat.products.length} Item</span>
+                    </div>
+                    <svg class="rotate-icon ${isOpen ? 'open' : ''}" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </div>
+                  <div class="category-content ${isOpen ? 'open' : ''} p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    ${cat.products.map(p => {
+                      const inCart = cart.find(i => i.id === p.id);
+                      return `
+                        <div class="product-card bg-white border rounded-xl p-3 text-center">
+                          <img src="${p.image}" class="w-full h-32 object-contain mb-3 rounded-lg" onerror="this.src='https://via.placeholder.com/150?text=Goklat'">
+                          <h3 class="text-sm font-bold h-10 overflow-hidden text-gray-800 mb-1">${p.name}</h3>
+                          <p class="text-purple-700 font-bold mb-3">${formatCurrency(p.price)}</p>
+                          ${p.outOfStock ? 
+                            `<div class="py-2 bg-red-100 text-red-600 text-xs font-bold rounded-lg">Stok Habis</div>` :
+                            inCart ? 
+                            `<div class="flex items-center justify-between bg-purple-100 rounded-lg p-1">
+                              <button onclick="updateQty(${p.id}, -1)" class="w-8 h-8 bg-purple-600 text-white rounded-md font-bold">-</button>
+                              <span class="font-bold text-purple-900">${inCart.qty}</span>
+                              <button onclick="updateQty(${p.id}, 1)" class="w-8 h-8 bg-purple-600 text-white rounded-md font-bold">+</button>
+                            </div>` :
+                            `<button onclick="addToCart(${p.id})" class="w-full py-2 bg-purple-600 text-white rounded-lg text-sm font-bold shadow-md">Tambah</button>`
+                          }
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          ${cart.length > 0 ? `
+            <div class="cart-slide-in mt-10 bg-white p-6 rounded-3xl shadow-2xl border-t-8 border-purple-600">
+              <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">🛒 Keranjang Belanja</h3>
+              <div class="space-y-3 mb-6">
+                ${cart.map(i => `
+                  <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl">
+                    <span class="font-medium text-gray-700">${i.name} (x${i.qty})</span>
+                    <span class="font-bold text-purple-700">${formatCurrency(i.price * i.qty)}</span>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="flex justify-between text-xl font-bold mb-8 p-4 bg-purple-50 rounded-xl">
+                <span>Total Bayar</span>
+                <span class="text-purple-900">${formatCurrency(total)}</span>
+              </div>
+              
+              <form onsubmit="sendWhatsApp(event)" class="space-y-4">
+                <input type="text" name="name" placeholder="Nama Lengkap" required class="w-full p-4 border-2 border-gray-100 rounded-xl focus:border-purple-500 outline-none">
+                <input type="tel" name="phone" placeholder="No. WhatsApp (Contoh: 0812...)" required class="w-full p-4 border-2 border-gray-100 rounded-xl focus:border-purple-500 outline-none">
+                <textarea name="addr" placeholder="Alamat Pengiriman Lengkap" required class="w-full p-4 border-2 border-gray-100 rounded-xl focus:border-purple-500 outline-none h-24"></textarea>
+                <input type="text" name="city" placeholder="Kota" value="Padang Sidempuan" required class="w-full p-4 border-2 border-gray-100 rounded-xl focus:border-purple-500 outline-none">
+                <button type="submit" class="whatsapp-btn w-full py-5 text-white font-bold rounded-2xl text-lg shadow-xl flex items-center justify-center gap-3">
+                   Kirim Pesanan ke WhatsApp
+                </button>
+              </form>
+            </div>
+          ` : `
+            <div class="mt-10 text-center py-10 bg-white rounded-3xl shadow-inner border-2 border-dashed border-gray-200">
+              <p class="text-gray-400">Keranjang Anda masih kosong. Silakan pilih menu di atas.</p>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    renderApp();
+  </script>
+</body>
+</html>

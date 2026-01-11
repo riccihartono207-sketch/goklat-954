@@ -50,7 +50,7 @@
         "name": "LEMON TEA",
         "price": 5000,
         "image": "https://i.ibb.co.com/TqNkLS53/LEMON-TEA.png",
-        "outOfStock": true
+        "outOfStock": false 
       },
       {
         "id": 8,
@@ -140,7 +140,7 @@
         "name": "COCO HALLOWEEN",
         "price": 8000,
         "image": "https://i.ibb.co.com/nMr4j6wn/COCO-HALLOWEEN.png",
-        "outOfStock": true
+        "outOfStock": false
       },
       {
         "id": 20,
@@ -154,7 +154,7 @@
         "name": "COCO LUMER",
         "price": 8000,
         "image": "https://i.ibb.co.com/Xx1LcG6h/COCO-LUMER.png",
-        "outOfStock": true
+        "outOfStock": false 
       },
       {
         "id": 22,
@@ -182,7 +182,7 @@
         "name": "COCO ROCKY TIRAMISU",
         "price": 8000,
         "image": "https://i.ibb.co.com/qY2vkfPY/COCO-ROCKY-TIRAMISU.png",
-        "outOfStock": true
+        "outOfStock": false 
       },
       {
         "id": 26,
@@ -230,7 +230,7 @@
         "name": "COFFEE ALA GOKLAT",
         "price": 8000,
         "image": "https://i.ibb.co.com/fVxswndB/COFFEE-ALA-GOKLAT.png",
-        "outOfStock": true
+        "outOfStock": false 
       },
       {
         "id": 32,
@@ -244,7 +244,7 @@
         "name": "COFFIEE TIRAMISU",
         "price": 8000,
         "image": "https://i.ibb.co.com/d4tN1bCc/COFFIEE-TIRAMISU.png",
-        "outOfStock": true
+        "outOfStock": false
       }
     ]
   },
@@ -257,7 +257,7 @@
         "name": "TARO",
         "price": 8000,
         "image": "https://i.ibb.co.com/8gtDgfhS/TARO.png",
-        "outOfStock": true
+        "outOfStock": false
       },
       {
         "id": 35,
@@ -278,14 +278,14 @@
         "name": "BROWN SUGAR TIRAMISU",
         "price": 8000,
         "image": "https://i.ibb.co.com/21Trcvzb/BROWN-SUGAR-TIRAMISU.png",
-        "outOfStock": true
+        "outOfStock": false
       },
       {
         "id": 38,
         "name": "BROWN SUGAR VANILLA LAGOAN",
         "price": 8000,
         "image": "https://i.ibb.co.com/s9kjddVS/BROWN-SUGAR-VANILLA-LAGOAN.png",
-        "outOfStock": true
+        "outOfStock": false 
       },
       {
         "id": 39,

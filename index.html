@@ -583,9 +583,11 @@
                 </div>
                 
                 <div class="space-y-2">
-                  <label class="text-xs font-bold text-gray-500 ml-1 uppercase">Alamat Lengkap</label>
-                  <textarea name="address" placeholder="Tulis nama jalan, nomor rumah, atau patokan..." required class="w-full p-4 border border-gray-100 rounded-2xl outline-none h-28 focus:border-purple-600 bg-gray-50 resize-none transition text-sm sm:text-base"></textarea>
-                </div>
+                    <label class="text-xs font-bold text-gray-500 ml-1 uppercase">Alamat Lengkap</label> 
+                    <input type="text" name="address" value="${
+                      formState.address || ""
+                    }" oninput="formState.address = this.value" placeholder="Tulis nama jalan, nomor rumah, atau patokan..." required class="w-full p-4 border border-gray-100 rounded-2xl outline-none focus:border-purple-600 bg-gray-50 transition text-sm sm:text-base">
+                  </div>
 
                 <div class="bg-gray-900 p-6 sm:p-8 rounded-[2rem] text-white shadow-xl mt-8">
                   <div class="space-y-2 mb-6 border-b border-gray-800 pb-6">

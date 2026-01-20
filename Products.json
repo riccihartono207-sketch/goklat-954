@@ -57,7 +57,7 @@
         "name": "LYCHEE TEA",
         "price": 5000,
         "image": "https://i.ibb.co.com/YBV02Fxd/LYCHEE-TEA.png",
-        "outOfStock": false
+        "outOfStock": true
       },
       {
         "id": 9,
@@ -154,7 +154,7 @@
         "name": "COCO LUMER",
         "price": 8000,
         "image": "https://i.ibb.co.com/Xx1LcG6h/COCO-LUMER.png",
-        "outOfStock": false 
+        "outOfStock": true 
       },
       {
         "id": 22,
@@ -278,7 +278,7 @@
         "name": "BROWN SUGAR TIRAMISU",
         "price": 8000,
         "image": "https://i.ibb.co.com/21Trcvzb/BROWN-SUGAR-TIRAMISU.png",
-        "outOfStock": false
+        "outOfStock": true
       },
       {
         "id": 38,

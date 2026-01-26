@@ -140,7 +140,7 @@
         "name": "COCO HALLOWEEN",
         "price": 8000,
         "image": "https://i.ibb.co.com/nMr4j6wn/COCO-HALLOWEEN.png",
-        "outOfStock": false
+        "outOfStock": true
       },
       {
         "id": 20,

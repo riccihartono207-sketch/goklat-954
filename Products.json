@@ -36,7 +36,7 @@
         "name": "JASMINE TEA",
         "price": 5000,
         "image": "https://i.ibb.co.com/RGrKrRyd/JASMINE-TEA.png",
-        "outOfStock": false
+        "outOfStock": true
       },
       {
         "id": 6,
@@ -50,7 +50,7 @@
         "name": "LEMON TEA",
         "price": 5000,
         "image": "https://i.ibb.co.com/TqNkLS53/LEMON-TEA.png",
-        "outOfStock": false
+        "outOfStock": true
       },
       {
         "id": 8,

@@ -78,7 +78,7 @@
         "name": "PEACH TEA",
         "price": 5000,
         "image": "https://i.ibb.co.com/KjxnMWxP/PEACH-TEA.png",
-        "outOfStock": false
+        "outOfStock": true
       }
     ]
   },

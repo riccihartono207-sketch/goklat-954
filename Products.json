@@ -244,7 +244,7 @@
         "name": "COFFIEE TIRAMISU",
         "price": 8000,
         "image": "https://i.ibb.co.com/d4tN1bCc/COFFIEE-TIRAMISU.png",
-        "outOfStock": false
+        "outOfStock": true
       }
     ]
   },
@@ -278,7 +278,7 @@
         "name": "BROWN SUGAR TIRAMISU",
         "price": 8000,
         "image": "https://i.ibb.co.com/21Trcvzb/BROWN-SUGAR-TIRAMISU.png",
-        "outOfStock": false
+        "outOfStock": true
       },
       {
         "id": 38,
